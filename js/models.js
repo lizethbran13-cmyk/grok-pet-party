@@ -25,7 +25,7 @@ export function part(g, m, x, y, z, sx, sy, sz, parent, shadow = true) {
 }
 export const CHARS = [
   { id: 'luna', n: 'Luna', kind: 'rat', fur: '#cfc8d8', belly: '#f4eef8', acc: '#8b6cff', blurb: 'Clever grey rat. Fast thinker!' },
-  { id: 'pirat', n: 'Pi-rat', kind: 'rat', fur: '#8a5a3c', belly: '#d8b08c', acc: '#1f1f1f', oneEye: true, blurb: 'One-eyed pirate rat. Arr!' },
+  { id: 'pirat', n: 'Pi-rat', kind: 'rat', fur: '#f8f6f2', belly: '#ffffff', hood: '#6b5e52', acc: '#1f1f1f', oneEye: true, blurb: 'One-eyed pirate rat. Arr!' },
   { id: 'snowie', n: 'Snowie', kind: 'rat', fur: '#fbfbff', belly: '#ffffff', acc: '#4fc3ff', blurb: 'Snow-white rat. Loves to fly.' },
   { id: 'candy', n: 'Candy', kind: 'dog', fur: '#8e9099', belly: '#d9dadf', acc: '#ff4f8b', blurb: 'Mini schnauzer, Ruffsources boss. Best catcher!' },
   { id: 'torty', n: 'Torty', kind: 'turtle', fur: '#7dc75a', belly: '#e7d58c', acc: '#2f8f4a', blurb: 'Slow? Not on the ice!' },
@@ -46,7 +46,7 @@ export function makeChar(id, color, opt = {}) {
   if (c.kind === 'rat') {
     part(G.sph(), fur, 0, 0.42, 0, 0.36, 0.34, 0.46, body); part(G.sph(), bel, 0, 0.36, 0.14, 0.27, 0.25, 0.3, body);
     const h = new THREE.Group(); h.position.set(0, 0.62, 0.36); body.add(h);
-    part(G.sph(), fur, 0, 0, 0, 0.25, 0.23, 0.27, h); part(G.cone(), fur, 0, -0.04, 0.27, 0.14, 0.24, 0.14, h).rotation.x = Math.PI / 2; part(G.sph(), pinkM(), 0, -0.04, 0.4, 0.045, 0.045, 0.045, h);
+    const hm = c.hood ? mat(c.hood) : fur; part(G.sph(), hm, 0, 0, 0, 0.25, 0.23, 0.27, h); if (c.hood) part(G.sph(), mat('#ffffff'), 0, 0.1, 0.22, 0.035, 0.1, 0.04, h); part(G.cone(), hm, 0, -0.04, 0.27, 0.14, 0.24, 0.14, h).rotation.x = Math.PI / 2; part(G.sph(), pinkM(), 0, -0.04, 0.4, 0.045, 0.045, 0.045, h);
     for (const s of [-1, 1]) { part(G.cyl(), fur, s * 0.17, 0.2, -0.02, 0.13, 0.03, 0.13, h).rotation.x = Math.PI / 2; part(G.cyl(), pinkM(), s * 0.17, 0.2, 0.0, 0.09, 0.02, 0.09, h).rotation.x = Math.PI / 2; }
     eyes(h, 0.05, 0.2, 0.1, 0.05, c.oneEye);
     for (const s of [-1, 1]) for (const r of [-0.15, 0.15]) { const w = part(G.cylLo(), mat('#ffffff', { roughness: 0.5 }), s * 0.16, -0.05, 0.3, 0.008, 0.2, 0.008, h, false); w.rotation.z = Math.PI / 2 + r; }
